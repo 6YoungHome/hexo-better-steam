@@ -1,0 +1,34 @@
+{
+  "name": "hexo-better-steam",
+  "version": "0.0.1",
+  "description": "A Better Hexo Steam games page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hexo",
+    "steam",
+    "game",
+    "generator",
+    "plugin"
+  ],
+  "author": "HCLonely",
+  "license": "Apache Licence 2.0",
+  "dependencies": {
+    "axios-https-proxy-fix": "^0.17.1",
+    "cheerio": "^1.0.0-rc.3",
+    "ejs": "^3.0.1",
+    "hexo-fs": "^2.0.0",
+    "hexo-i18n": "^1.0.0",
+    "hexo-log": "^1.0.0",
+    "path": "^0.12.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HCLonely/hexo-steam-games.git"
+  },
+  "devDependencies": {
+    "ejs-lint": "^1.0.1"
+  }
+}
