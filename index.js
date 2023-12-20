@@ -46,6 +46,7 @@ hexo.extend.console.register('steam', 'Update steam games data', options, async 
         }
 
         let games = [];
+        let appid_list = [];
         source_dir = __dirname.split("\\").slice(0,-2).join("/"); //获取blog根目录
 
         if (this.config.steam.steamId) {
@@ -56,8 +57,23 @@ hexo.extend.console.register('steam', 'Update steam games data', options, async 
                 updateSteamGames(steamInfo.id, this.config.steam.apiKey, steamInfo.tab || this.config.steam.tab, steamInfo.length || this.config.steam.length, steamInfo.proxy || this.config.steam.proxy, steamInfo.freeGames || this.config.steam.freeGames);
             });
             await sleep(3000);
+            // this.config.steam.steamInfos.forEach(steamInfo => {
+            //     games = games.concat(JSON.parse(fs.readFileSync(path.resolve(source_dir, `source/_data/steam/${steamInfo.id}.json`))));
+            // });
             this.config.steam.steamInfos.forEach(steamInfo => {
-                games = games.concat(JSON.parse(fs.readFileSync(path.resolve(source_dir, `source/_data/steam/${steamInfo.id}.json`))));
+                new_games = JSON.parse(fs.readFileSync(path.resolve(source_dir, `source/_data/steam/${steamInfo.id}.json`)));
+                new_games.forEach(game => {
+                    if (appid_list.includes(game.appid)) {
+                        games.forEach(g => {
+                            if (g.appid == game.appid) {
+                                g.playtime_forever += game.playtime_forever;
+                            }
+                        });
+                    } else {
+                        games.push(game);
+                        appid_list.push(game.appid);
+                    }
+                });
             });
         };
         games.sort(function(first, second) {
