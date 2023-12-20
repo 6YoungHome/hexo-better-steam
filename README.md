@@ -7,9 +7,9 @@
 ```yaml
 steam:
   enable: true
-  steamId: ''
+  steamId: '******'
   apiKey: '******'
-  path: 
+  path: : /steam/index.html
   title: Steam 游戏库
   quote: '来来来，走过路过别错过，有空一起玩游戏~~~'
   tab: all
@@ -25,14 +25,14 @@ steam:
 ```yaml
 steam:
   enable: true
-  apiKey: '728ED49538284B72D8C05B3EE4111748'
+  apiKey: '******'
+  path: /steam/index.html
+  title: Steam 游戏库
   steamInfos: # 多账号配置
-    - id: '***' # 主账号
+    - id: '******' # 主账号
       principal: true
-      path: 
-    - id: '***' # 分账号
+    - id: '******' # 分账号
       principal: false
-      path: 
       ... # 同单个账号的其他参数
   quote: '来来来，走过路过别错过，有空一起玩游戏~~~'
   tab: all
