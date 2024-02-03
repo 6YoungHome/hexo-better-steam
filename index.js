@@ -25,7 +25,7 @@ hexo.extend.generator.register('steamgames', function (locals) {
 });
 hexo.extend.console.register('steam', 'Update steam games data', options, async function (args) {
     if (args.d) {
-        source_dir = __dirname.split("\\").slice(0,-2).join("/");
+        source_dir = __dirname.split("\\").slice(0, -2).join("/");
 
         if (fs.existsSync(path.join(source_dir, `source/_data/steam/`))) {
             fs.rmdirSync(path.join(source_dir, `source/_data/steam/`));
@@ -47,7 +47,7 @@ hexo.extend.console.register('steam', 'Update steam games data', options, async 
 
         let games = [];
         let appid_list = [];
-        source_dir = __dirname.split("\\").slice(0,-2).join("/"); //获取blog根目录
+        source_dir = __dirname.split("\\").slice(0, -2).join("/"); //获取blog根目录
 
         if (this.config.steam.steamId) {
             updateSteamGames(this.config.steam.steamId, this.config.steam.apiKey, this.config.steam.tab, this.config.steam.length, this.config.steam.proxy, this.config.steam.freeGames);
@@ -60,6 +60,8 @@ hexo.extend.console.register('steam', 'Update steam games data', options, async 
             // this.config.steam.steamInfos.forEach(steamInfo => {
             //     games = games.concat(JSON.parse(fs.readFileSync(path.resolve(source_dir, `source/_data/steam/${steamInfo.id}.json`))));
             // });
+            exclude_games = JSON.parse(fs.readFileSync(path.resolve(source_dir, `source/_data/extra_steam.json`)));
+
             this.config.steam.steamInfos.forEach(steamInfo => {
                 new_games = JSON.parse(fs.readFileSync(path.resolve(source_dir, `source/_data/steam/${steamInfo.id}.json`)));
                 new_games.forEach(game => {
@@ -76,7 +78,12 @@ hexo.extend.console.register('steam', 'Update steam games data', options, async 
                 });
             });
         };
-        games.sort(function(first, second) {
+        exclude_games.forEach(info => {
+            games = games.filter(item => {
+                return item.appid != info.appid;
+            })
+        })
+        games.sort(function (first, second) {
             return second.playtime_forever - first.playtime_forever;
         });
         fs.writeFile(path.join(source_dir, `source/_data/steam.json`), JSON.stringify(games), err => {
